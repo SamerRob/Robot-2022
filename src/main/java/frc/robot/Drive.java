@@ -36,12 +36,12 @@ public class Drive
     {
         SmartDashboard.putNumber("Controler right output", speed);
         backR.set(ControlMode.PercentOutput, speed);
-        frontR.set(ControlMode.PercentOutput, speed);   
+        frontR.set(ControlMode.PercentOutput, speed);
     }
     public void setMotors()
     {
-        setLeftSide(-Math.pow((control.getLeftY()), 1));
-        setRightSide(-Math.pow((control.getRightY()), 1));
+        setLeftSide(control.getLeftY() * Math.abs(control.getLeftY()));
+        setRightSide(control.getRightY() * Math.abs(control.getRightY()));
     }
 
 
