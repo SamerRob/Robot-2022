@@ -4,9 +4,17 @@
 
 package frc.robot;
 
+//import edu.wpi.first.wpilibj.Controller;
+//import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;	
+import edu.wpi.first.wpilibj.XboxController;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +27,16 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private WPI_TalonSRX intakeMotor = new WPI_TalonSRX	(Constants.intakeId);
+  private WPI_TalonSRX uppyMotor = new WPI_TalonSRX	(Constants.uppyId);
+  Intake intake = new Intake(intakeMotor);
+  Uppy uppy = new Uppy(uppyMotor);
+  XboxController controller = new XboxController(0);
+  public WPI_TalonSRX frontLeft = new WPI_TalonSRX(Constants.frontLeft);
+  public WPI_TalonSRX backLeft = new WPI_TalonSRX(Constants.backLeft);
+  public WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.frontRight);
+  public WPI_TalonSRX backRight = new WPI_TalonSRX(Constants.backRight);
+  Drive roboMove = new Drive(backLeft,frontLeft,frontRight,backRight, controller);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -78,7 +96,23 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if(controller.getBButton()){
+      intake.spin(-0.5);
+    }else if(controller.getAButton()){
+      intake.spin(0.5);
+    }else{
+      intake.spin(0);
+    }
+    if(controller.getYButton()){
+      uppy.goUp(0.7);
+    }else if(controller.getXButton()){
+      uppy.goUp(-0.7);
+    }else{
+      uppy.goUp(0);
+    }
+    roboMove.setMotors();
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
