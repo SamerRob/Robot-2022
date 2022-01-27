@@ -8,17 +8,33 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.XboxController;
+//import java.lang.Math;
+
+
+    
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
+ 
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
+  public TalonSRX frontLeft = new TalonSRX(0);
+  public TalonSRX backLeft = new TalonSRX(1);
+  public TalonSRX frontRight = new TalonSRX(3);
+  public TalonSRX backRight = new TalonSRX(2);
+  public XboxController userControl = new XboxController(0);
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  Drive roboMove = new Drive(backLeft,frontLeft,frontRight,backRight,userControl);
+  EncoderTest encode = new EncoderTest(userControl);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -39,7 +55,10 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() 
+  {
+      
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -78,7 +97,19 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() 
+  {
+    roboMove.setMotors();
+   // backRight.set(ControlMode.PercentOutput, .3);
+   if(userControl.getBButton()){
+      encode.goUp(90);
+   }else if(userControl.getAButton()){
+     encode.goUp(180);
+   }else{
+     encode.goUp(0);
+   }
+
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
