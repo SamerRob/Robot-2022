@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.XboxController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import java.lang.Math;
 
 
@@ -26,14 +27,14 @@ import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  public TalonSRX frontLeft = new TalonSRX(0);
-  public TalonSRX backLeft = new TalonSRX(1);
-  public TalonSRX frontRight = new TalonSRX(3);
-  public TalonSRX backRight = new TalonSRX(2);
+  public WPI_TalonFX frontLeft = new WPI_TalonFX(0);
+  public WPI_TalonFX backLeft = new WPI_TalonFX(1);
+  public WPI_TalonFX frontRight = new WPI_TalonFX(3);
+  public WPI_TalonFX backRight = new WPI_TalonFX(2);
   public XboxController userControl = new XboxController(0);
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  Drive roboMove = new Drive(backLeft,frontLeft,frontRight,backRight,userControl);
+  Drive roboMove = new Drive(frontLeft,frontRight,userControl);
   EncoderTest encode = new EncoderTest(userControl);
 
   /**
@@ -45,9 +46,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    frontRight.setInverted(true);
-    backRight.setInverted(true);
-    backLeft.setInverted(false);
+    frontRight.setInverted(true);;
     frontLeft.setInverted(false);
   }
 
@@ -97,14 +96,17 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    backLeft.follow(frontLeft);
+    backRight.follow(frontRight);
+  }
+    
 
-  /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() 
   {
     roboMove.setMotors();
-   // backRight.set(ControlMode.PercentOutput, .3);
+   /* backRight.set(ControlMode.PercentOutput, .3);
    if(userControl.getBButton()){
       encode.goUp(90);
    }else if(userControl.getAButton()){
@@ -112,6 +114,8 @@ public class Robot extends TimedRobot {
    }else{
      encode.goUp(0);
    }
+   */
+   roboMove.setMotors();
 
   }
 

@@ -1,25 +1,20 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //mport java.security.acl.Group;
 import edu.wpi.first.wpilibj.XboxController;
 import java.lang.Math;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Drive 
 {
-    
-    private TalonSRX backL;
-    private TalonSRX backR;
-    private TalonSRX frontL;
-    private TalonSRX frontR;
+    private WPI_TalonFX frontL;
+    private WPI_TalonFX frontR;
     private XboxController control;
 
 
-    public Drive(TalonSRX BL, TalonSRX FL, TalonSRX FR, TalonSRX BR, XboxController uCon)
+    public Drive(WPI_TalonFX FL, WPI_TalonFX FR, XboxController uCon)
     {
-        backL = BL;
-        backR = BR;
         frontL = FL;
         frontR = FR;
         control = uCon;
@@ -29,13 +24,11 @@ public class Drive
     {
         SmartDashboard.putNumber("Controler left output", speed);
         //System.out.println("HERE");
-        backL.set(ControlMode.PercentOutput, speed);
         frontL.set(ControlMode.PercentOutput, speed);
     }
     public void setRightSide(double speed)
     {
         SmartDashboard.putNumber("Controler right output", speed);
-        backR.set(ControlMode.PercentOutput, speed);
         frontR.set(ControlMode.PercentOutput, speed);
     }
     public void setMotors()
