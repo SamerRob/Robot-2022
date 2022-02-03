@@ -9,13 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.XboxController;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 //import java.lang.Math;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 
     
@@ -31,10 +29,10 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private WPI_TalonSRX intakeMotor = new WPI_TalonSRX	(Constants.intakeId);
   private CANSparkMax uppyMotor = new CANSparkMax(Constants.uppyId, MotorType.kBrushless);
-  public WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.frontLID);
-  public WPI_TalonFX backLeft = new WPI_TalonFX(Constants.backLID);
-  public WPI_TalonFX frontRight = new WPI_TalonFX(Constants.frontRID);
-  public WPI_TalonFX backRight = new WPI_TalonFX(Constants.backRID);
+  public WPI_VictorSPX frontLeft = new WPI_VictorSPX(Constants.frontLID);
+  public WPI_VictorSPX backLeft = new WPI_VictorSPX(Constants.backLID);
+  public WPI_VictorSPX frontRight = new WPI_VictorSPX(Constants.frontRID);
+  public WPI_VictorSPX backRight = new WPI_VictorSPX(Constants.backRID);
   public XboxController userControl = new XboxController(0);
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();

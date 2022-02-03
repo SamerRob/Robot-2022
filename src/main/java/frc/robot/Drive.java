@@ -4,16 +4,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.XboxController;
 import java.lang.Math;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Drive 
 {
-    private WPI_TalonFX frontL;
-    private WPI_TalonFX frontR;
+    private WPI_VictorSPX frontL;
+    private WPI_VictorSPX frontR;
     private XboxController control;
 
 
-    public Drive(WPI_TalonFX FL, WPI_TalonFX FR, XboxController uCon)
+    public Drive(WPI_VictorSPX FL, WPI_VictorSPX FR, XboxController uCon)
     {
         frontL = FL;
         frontR = FR;
