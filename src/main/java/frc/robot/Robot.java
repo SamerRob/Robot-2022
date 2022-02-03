@@ -14,6 +14,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRX;	
 import edu.wpi.first.wpilibj.XboxController;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 
 
 /**
@@ -37,6 +41,13 @@ public class Robot extends TimedRobot {
   public WPI_TalonSRX frontRight = new WPI_TalonSRX(Constants.frontRight);
   public WPI_TalonSRX backRight = new WPI_TalonSRX(Constants.backRight);
   Drive roboMove = new Drive(backLeft,frontLeft,frontRight,backRight, controller);
+
+  Boolean running = false;
+
+  // the new class we lookin at
+  public WPI_TalonFX testMotor = new WPI_TalonFX(0);
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -96,22 +107,31 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    if(controller.getBButton()){
-      intake.spin(-0.5);
-    }else if(controller.getAButton()){
-      intake.spin(0.5);
-    }else{
-      intake.spin(0);
-    }
-    if(controller.getYButton()){
-      uppy.goUp(0.7);
-    }else if(controller.getXButton()){
-      uppy.goUp(-0.7);
-    }else{
-      uppy.goUp(0);
-    }
-    roboMove.setMotors();
+  public void teleopPeriodic()
+   {
+    // if(controller.getBButton()){
+    //   intake.spin(-0.5);
+    // }else if(controller.getAButton()){
+    //   intake.spin(0.5);
+    // }else{
+    //   intake.spin(0);
+    // }
+    // if(controller.getYButton()){
+    //   uppy.goUp(0.7);
+    // }else if(controller.getXButton()){
+    //   uppy.goUp(-0.7);
+    // }else{
+    //   uppy.goUp(0);
+    // }
+    // roboMove.setMotors();
+
+   
+    
+      testMotor.set(ControlMode.Position, 2048 *controller.getLeftY());
+ SmartDashboard.putNumber("Input for controller", 2048 *controller.getLeftY());
+
+
+    
   }
 
   /** This function is called once when the robot is disabled. */
