@@ -7,12 +7,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 //import java.lang.Math;
 
 
@@ -27,15 +29,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  public WPI_TalonFX frontLeft = new WPI_TalonFX(0);
-  public WPI_TalonFX backLeft = new WPI_TalonFX(1);
-  public WPI_TalonFX frontRight = new WPI_TalonFX(3);
-  public WPI_TalonFX backRight = new WPI_TalonFX(2);
+  private WPI_TalonSRX intakeMotor = new WPI_TalonSRX	(Constants.intakeId);
+  private CANSparkMax uppyMotor = new CANSparkMax(Constants.uppyId, MotorType.kBrushless);
+  public WPI_TalonFX frontLeft = new WPI_TalonFX(Constants.frontLID);
+  public WPI_TalonFX backLeft = new WPI_TalonFX(Constants.backLID);
+  public WPI_TalonFX frontRight = new WPI_TalonFX(Constants.frontRID);
+  public WPI_TalonFX backRight = new WPI_TalonFX(Constants.backRID);
   public XboxController userControl = new XboxController(0);
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   Drive roboMove = new Drive(frontLeft,frontRight,userControl);
-  EncoderTest encode = new EncoderTest(userControl);
+  Intake intake = new Intake(intakeMotor);
+  Uppy uppy = new Uppy(uppyMotor);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -46,7 +51,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    frontRight.setInverted(true);;
+    frontRight.setInverted(true);
     frontLeft.setInverted(false);
   }
 
@@ -99,23 +104,41 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
+    backLeft.configFactoryDefault();
+    backRight.configFactoryDefault();
+    frontLeft.configFactoryDefault();
+    frontRight.configFactoryDefault();
   }
     
 
   @Override
   public void teleopPeriodic() 
   {
+    if(userControl.getBButton())
+    {
+      intake.spin(-0.5);
+    }
+    else if(userControl.getAButton())
+    {
+      intake.spin(0.5);
+    }
+    else
+    {
+      intake.spin(0);
+    }
+    if(userControl.getYButton())
+    {
+      uppy.goUp(0.7);
+    }
+    else if(userControl.getXButton())
+    {
+      uppy.goUp(-0.7);
+    }
+    else
+    {
+      uppy.goUp(0);
+    }
     roboMove.setMotors();
-   /* backRight.set(ControlMode.PercentOutput, .3);
-   if(userControl.getBButton()){
-      encode.goUp(90);
-   }else if(userControl.getAButton()){
-     encode.goUp(180);
-   }else{
-     encode.goUp(0);
-   }
-   */
-   roboMove.setMotors();
 
   }
 
