@@ -16,8 +16,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 //Encoder
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
+//import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.SparkMaxPIDController;
 
 
     
@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
     frontRight.setInverted(true);
     frontLeft.setInverted(false);
 
-
+    
     //Encoder
     /**
      * The restoreFactoryDefaults method can be used to reset the configuration parameters
@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
      * is constructed by calling the getPIDController() method on an existing
      * CANSparkMax object
      */
+    /*
     m_pidController = uppyMotor.getPIDController();
 
     // Encoder object created to display position values
@@ -116,6 +117,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Max Output", kMaxOutput);
     SmartDashboard.putNumber("Min Output", kMinOutput);
     SmartDashboard.putNumber("Set uppy Move amount", 0);
+    */
   }
 
   /**
