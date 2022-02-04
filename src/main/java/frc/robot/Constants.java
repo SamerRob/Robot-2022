@@ -7,4 +7,7 @@ public class Constants {
     public static final int backLID = 3;
     public static final int frontRID = 4;
     public static final int backRID = 5;
+
+
+    //Encoder
 }
