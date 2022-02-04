@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.XboxController;
@@ -67,9 +69,14 @@ public class Robot extends TimedRobot {
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
-    
-    frontRight.setInverted(true);
-    frontLeft.setInverted(false);
+
+    frontRight.setInverted(false);
+    frontLeft.setInverted(true);
+   
+   
+    backLeft.setInverted(InvertType.FollowMaster);
+    backRight.setInverted(InvertType.FollowMaster);
+
 
     
     //Encoder
